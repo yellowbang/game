@@ -2,23 +2,19 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {firestoreConnect} from 'react-redux-firebase'
 import {compose} from 'redux'
-import {Redirect} from 'react-router-dom'
-import moment from 'moment'
+import money from "../../assests/money.png"
 
 const ProjectDetails = (props) => {
     const {project, auth} = props;
-    if (!auth.uid) return <Redirect to='/signin'/>;
+
     if (project) {
         return (
             <div className="container section project-details">
                 <div className="card z-depth-0">
-                    <div className="card-content">
-                        <span className="card-title">{project.title}</span>
-                        <p>{project.content}</p>
-                    </div>
-                    <div className="card-action grey lighten-4 grey-text">
-                        <div>Posted by {project.authorFirstName} {project.authorLastName}</div>
-                        <div>{moment(project.createdAt.toDate()).calendar()}</div>
+                    <div className="card-content z-depth-2">
+                        <span className="card-title">提示</span>
+                        <h4>{project.gameId + '号玩家的愿望是：'}</h4>
+                        <h4>{project.content}</h4>
                     </div>
                 </div>
             </div>
@@ -26,17 +22,27 @@ const ProjectDetails = (props) => {
     } else {
         return (
             <div className="container center">
-                <p>Loading project...</p>
+                <div className="card z-depth-0">
+                    <div className="card-content z-depth-2">
+                        <img src={money}/>
+                        <h1 className="card-title">但无提示</h1>
+                    </div>
+                </div>
             </div>
         )
     }
 };
 
 const mapStateToProps = (state, ownProps) => {
-    // console.log(state);
     const id = ownProps.match.params.id;
     const projects = state.firestore.data.projects;
-    const project = projects ? projects[id] : null;
+    let project = undefined;
+    for (let i in projects) {
+        if (JSON.stringify(projects[i].gameId) === id) {
+            project = projects[i];
+            break;
+        }
+    }
     return {
         project: project,
         auth: state.firebase.auth
