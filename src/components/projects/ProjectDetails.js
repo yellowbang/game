@@ -8,7 +8,7 @@ import haowudian from "../../assests/haowudian.png"
 import wudejiu from "../../assests/wudejiu.png"
 
 const ProjectDetails = (props) => {
-    const {project, auth} = props;
+    const {project} = props;
 
     if (project && project.gameId) {
         let label = project.travel ? '号玩家的想去的旅行是：' : '号玩家的愿望是：';
@@ -16,7 +16,7 @@ const ProjectDetails = (props) => {
         return (
             <div className="container section project-details">
                 <div className="card z-depth-0">
-                    <div className="card-content z-depth-2">
+                    <div className="card-content z-depth-1">
                         <span className="card-title">Tip💩</span>
                         <h5>{project.id + label}</h5>
                         <h4>{content}</h4>
@@ -41,9 +41,9 @@ const ProjectDetails = (props) => {
         return (
             <div className="container center section project-details">
                 <div className="card z-depth-0">
-                    <div className="card-content z-depth-2">
+                    <div className="card-content z-depth-1">
                         <h4 className="">{text}</h4>
-                        <img src={src} style={{width: '50%'}}/>
+                        <img src={src} style={{width: '50%'}} alt={"img"}/>
                     </div>
                 </div>
             </div>

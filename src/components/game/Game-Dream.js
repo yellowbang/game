@@ -4,7 +4,7 @@ import {compose} from 'redux'
 
 const textCenter = {textAlign: "center"};
 
-class Game extends Component {
+class GameDream extends Component {
 
     render() {
         let gameContent = null;
@@ -83,5 +83,5 @@ const mapStateToProps = (state, ownProps) => {
 
 export default compose(
     connect(mapStateToProps)
-)(Game)
+)(GameDream)
 
