@@ -22,6 +22,7 @@ const modalStyle = {
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 20,
+    overflow: 'scroll',
 };
 
 const modalContentStyle = {};
