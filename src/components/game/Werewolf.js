@@ -15,6 +15,10 @@ const appContainer = {
     alignItems: 'center',
 };
 
+const modalContentStyle = {
+    overflow: 'scroll',
+};
+
 const modalBottonsStyle = {
     width: '100%',
     maxWidth: 300,
@@ -158,7 +162,7 @@ class Werewolf extends Component {
                 <Modal
                     shown={startGameModalShown}
                     modalContent={(
-                        <div>
+                        <div style={modalContentStyle}>
                             <div>
                                 <label htmlFor="wolves">Number of Wolves</label>
                                 <input placeholder="Placeholder" id="wolves" type="number" className="validate"

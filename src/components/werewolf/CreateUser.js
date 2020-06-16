@@ -111,26 +111,6 @@ class CreateUser extends Component {
             <div className="container">
 
                 <div className="card z-depth-1">
-                    <form className="card-content white" style={formStyle} onSubmit={this.handleLoginUser}>
-                        <h5 className="grey-text text-darken-3">Login</h5>
-                        {!_.isEmpty(loginErrMsg) && <div style={errMsgStyle}>{loginErrMsg}</div>}
-                        <div>Name</div>
-                        <div className="input-field">
-                            <input id='loginUsername' onChange={this.handleChange}/>
-                        </div>
-                        <div>Password</div>
-                        <div className="input-field">
-                            <input id='loginPassword' onChange={this.handleChange}/>
-                        </div>
-                        <div className="input-field">
-                            <button disabled={loginUsername === '' || loginPassword === '' || loading}
-                                    className="btn yellow darken-2">Login
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-                <div className="card z-depth-1">
                     <form className="card-content white" style={formStyle} onSubmit={this.handleCreateUser}>
                         <h5 className="grey-text text-darken-3">Create a user</h5>
                         {!_.isEmpty(errMsg) && <div style={errMsgStyle}>{errMsg}</div>}
@@ -145,6 +125,26 @@ class CreateUser extends Component {
                         <div className="input-field">
                             <button disabled={username === '' || password === '' || loading}
                                     className="btn yellow darken-2">Create
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <div className="card z-depth-1">
+                    <form className="card-content white" style={formStyle} onSubmit={this.handleLoginUser}>
+                        <h5 className="grey-text text-darken-3">Login</h5>
+                        {!_.isEmpty(loginErrMsg) && <div style={errMsgStyle}>{loginErrMsg}</div>}
+                        <div>Name</div>
+                        <div className="input-field">
+                            <input id='loginUsername' onChange={this.handleChange}/>
+                        </div>
+                        <div>Password</div>
+                        <div className="input-field">
+                            <input id='loginPassword' onChange={this.handleChange}/>
+                        </div>
+                        <div className="input-field">
+                            <button disabled={loginUsername === '' || loginPassword === '' || loading}
+                                    className="btn yellow darken-2">Login
                             </button>
                         </div>
                     </form>
