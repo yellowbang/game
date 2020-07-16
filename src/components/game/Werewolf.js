@@ -35,12 +35,16 @@ class Werewolf extends Component {
             witch: true,
             hunter: true,
             knight: true,
+            deadKnight: false,
             cupid: false,
             bear: false,
+            guard: false,
+            baga: false,
             wolves: 3,
             wolfKing: true,
             wolfLady: false,
             wolfSnow: false,
+            wolfWhiteKing: false,
             startGameModalShown: false,
         }
     }
@@ -64,7 +68,7 @@ class Werewolf extends Component {
     };
 
     handleSubmit = () => {
-        const {seer, witch, hunter, knight, cupid, bear, wolves, wolfKing, wolfLady, wolfSnow} = this.state;
+        const {seer, witch, hunter, knight, deadKnight, guard, baga, cupid, bear, wolves, wolfKing, wolfLady, wolfSnow, wolfWhiteKing} = this.state;
         let roles = [];
         for (let i = 0; i < wolves; i++) {
             roles.push('wolf');
@@ -78,6 +82,9 @@ class Werewolf extends Component {
         if (wolfSnow) {
             roles.pop();
         }
+        if (wolfWhiteKing) {
+            roles.pop();
+        }
         if (wolfKing) {
             roles.push('Wolf King');
         }
@@ -87,7 +94,9 @@ class Werewolf extends Component {
         if (wolfSnow) {
             roles.push('Wolf Snow');
         }
-
+        if (wolfWhiteKing) {
+            roles.push('Wolf White King');
+        }
         if (bear) {
             roles.push('Bear');
         }
@@ -96,6 +105,15 @@ class Werewolf extends Component {
         }
         if (knight) {
             roles.push('Knight');
+        }
+        if (deadKnight) {
+            roles.push('Dead Knight');
+        }
+        if (guard) {
+            roles.push('Guard');
+        }
+        if (baga) {
+            roles.push('Baga');
         }
         if (hunter) {
             roles.push('Hunter');
@@ -132,7 +150,7 @@ class Werewolf extends Component {
     };
 
     render() {
-        const {startGameModalShown, wolves, wolfKing, wolfLady, wolfSnow, seer, witch, hunter, knight, cupid, bear} = this.state;
+        const {startGameModalShown, wolves, wolfKing, wolfLady, wolfSnow, wolfWhiteKing, seer, witch, hunter, knight, deadKnight, guard, baga, cupid, bear} = this.state;
         const {werewolfUsers} = this.props;
         console.log(werewolfUsers);
         let villagers = _.isEmpty(werewolfUsers) ? 7 : Object.keys(werewolfUsers).length - wolves;
@@ -146,6 +164,15 @@ class Werewolf extends Component {
             villagers--;
         }
         if (knight) {
+            villagers--;
+        }
+        if (deadKnight) {
+            villagers--;
+        }
+        if (guard) {
+            villagers--;
+        }
+        if (baga) {
             villagers--;
         }
         if (cupid) {
@@ -171,11 +198,15 @@ class Werewolf extends Component {
                             {this.renderCheckbox(wolfKing, 'wolfKing', 'Wolf King')}
                             {this.renderCheckbox(wolfLady, 'wolfLady', 'Wolf Lady')}
                             {this.renderCheckbox(wolfSnow, 'wolfSnow', 'Wolf Snow')}
+                            {this.renderCheckbox(wolfWhiteKing, 'wolfWhiteKing', 'Wolf White King')}
                             <hr style={{borderStyle: 'solid'}}/>
                             {this.renderCheckbox(seer, 'seer', 'Seer')}
                             {this.renderCheckbox(witch, 'witch', 'Witch')}
                             {this.renderCheckbox(hunter, 'hunter', 'Hunter')}
                             {this.renderCheckbox(knight, 'knight', 'Knight')}
+                            {this.renderCheckbox(deadKnight, 'deadKnight', 'Dead Knight')}
+                            {this.renderCheckbox(guard, 'guard', 'Guard')}
+                            {this.renderCheckbox(baga, 'baga', 'Baga')}
                             {this.renderCheckbox(cupid, 'cupid', 'Cupid')}
                             {this.renderCheckbox(bear, 'bear', 'Bear')}
                             <div>
