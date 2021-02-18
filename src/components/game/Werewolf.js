@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import _ from 'lodash';
-import {connect} from 'react-redux'
-import {compose} from 'redux'
+import './Werewolf.css';
+import {connect} from 'react-redux';
+import {compose} from 'redux';
 import {firestoreConnect} from "react-redux-firebase";
 import {startGame} from '../../store/actions/werewolfActions';
 import UserList from '../werewolf/UserList';
@@ -16,7 +17,7 @@ const appContainer = {
 };
 
 const modalContentStyle = {
-    overflow: 'scroll',
+    overflowY: 'scroll',
 };
 
 const modalBottonsStyle = {
@@ -143,7 +144,7 @@ class Werewolf extends Component {
                         name={id}
                         id={id}
                         onChange={this.handleCheck}/>
-                    <span>{label}</span>
+                    <span className={'color-black'}>{label}</span>
                 </label>
             </p>
         )
@@ -189,7 +190,7 @@ class Werewolf extends Component {
                 <Modal
                     shown={startGameModalShown}
                     modalContent={(
-                        <div style={modalContentStyle}>
+                        <div className="hide-scrollbar row" style={modalContentStyle}>
                             <div>
                                 <label htmlFor="wolves">Number of Wolves</label>
                                 <input placeholder="Placeholder" id="wolves" type="number" className="validate"

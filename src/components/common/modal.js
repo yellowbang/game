@@ -16,7 +16,7 @@ const modalContainerStyle = {
 const modalStyle = {
     backgroundColor: 'white',
     width: '90vw',
-    height: '95vh',
+    height: '80vh',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
