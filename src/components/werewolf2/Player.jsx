@@ -1,22 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import _ from "lodash";
-import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase";
-import { compose } from "redux";
 import Button from "react-bootstrap/Button";
 import { getClassFromName } from "./Character";
 import "./Werewolf2.css";
 import PlayersList from "./PlayersList";
-import { setVote } from "../../store/actions/werewolfActions";
+import { WerewolfContext } from "./WerewolfContextProvider";
 
 const Player = (props) => {
-  let { playerInfo, allPlayers } = props;
+  const id = window.location.pathname.split("/")[2];
   const [roleShown, setRoleShown] = useState(false);
+  const werewolfContext = useContext(WerewolfContext);
+  let { allPlayers } = werewolfContext;
 
-  if (!playerInfo) {
+  if (!allPlayers) {
     return <div />;
   }
 
+  const playerInfo = { ...allPlayers[id], id };
   allPlayers = _.sortBy(allPlayers, [
     (user) => {
       return user.number;
@@ -26,7 +26,7 @@ const Player = (props) => {
   const playerCharacter = getClassFromName(role);
 
   const handleVote = (selectedPlayer) => {
-    props.setVote(playerInfo, selectedPlayer.number);
+    werewolfContext.setVote(playerInfo, selectedPlayer.number);
   };
 
   return (
@@ -50,24 +50,4 @@ const Player = (props) => {
   );
 };
 
-const mapStateToProps = (state, ownProps) => {
-  const id = ownProps.match.params.id;
-  let allPlayers = state.firestore.data.werewolfUsers;
-  const playerInfo = allPlayers?.[id];
-
-  return {
-    playerInfo: { ...playerInfo, id },
-    allPlayers,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    setVote: (user, vote) => dispatch(setVote(user, vote)),
-  };
-};
-
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  firestoreConnect([{ collection: "werewolfUsers" }])
-)(Player);
+export default Player;
