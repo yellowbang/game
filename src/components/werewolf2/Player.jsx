@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import _ from "lodash";
 import Button from "react-bootstrap/Button";
+import Tabs from "react-bootstrap/Tabs";
+import Tab from "react-bootstrap/Tab";
 import { getClassFromName } from "./Character";
 import "./Werewolf2.css";
 import PlayersList from "./PlayersList";
@@ -30,9 +32,12 @@ const Player = (props) => {
   };
 
   return (
-    <div className="card my-0">
+    <div className="player-view card my-0 d-flex">
       <section className="player-info p-3 shadow-sm d-flex w-100 align-items-center justify-content-between">
-        <div>{`${username} (${number})`}</div>
+        <div />
+        <div>
+          <h4 className="m-0">{`${username} (${number})`}</h4>
+        </div>
         <Button
           variant="outline-primary"
           className=""

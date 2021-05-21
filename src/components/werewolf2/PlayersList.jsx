@@ -1,22 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import _ from "lodash";
-import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase";
-import { compose } from "redux";
 import Button from "react-bootstrap/Button";
 import "./Werewolf2.css";
+import { WerewolfContext } from "./WerewolfContextProvider";
 
 const INVALID_NUMBER = 99999;
 const SKIP_ACTION = { number: INVALID_NUMBER };
 
 const PlayersList = (props) => {
-  let {
-    allPlayers,
+  const werewolfContext = useContext(WerewolfContext);
+  const {
     handleSelect,
     label = "Select",
+    label2,
+    keyForLabel2,
+    lastButtonLabel = "Skip",
+    handleLastButton = () => {
+      onClickRow(SKIP_ACTION);
+    },
     disabled,
     rolesDisplayed,
   } = props;
+  let { allPlayers } = werewolfContext;
   const [selectedPlayer, setSelectedPlayer] = useState();
   if (!allPlayers) {
     return <div />;
@@ -35,11 +40,16 @@ const PlayersList = (props) => {
   ]);
 
   const itemRowClassName =
-    "player-row w-100 p-2 d-flex flex-row align-items-center justify-content-between";
-  const allPlayersRow = _.map(allPlayers, (user) => {
+    "player-row w-100 p-2 pt-0 d-flex flex-row align-items-center justify-content-between";
+  const allPlayersRow = _.map(allPlayers, (user, id) => {
     let userContainer = {
-      opacity: user.death ? 0.3 : 1,
+      opacity: user.death && !keyForLabel2 ? 0.3 : 1,
     };
+
+    let displayedLabel = label;
+    if (keyForLabel2 && user[keyForLabel2]) {
+      displayedLabel = label2;
+    }
 
     return (
       <div
@@ -59,7 +69,8 @@ const PlayersList = (props) => {
         </div>
         <div className="bg-white">
           <Button
-            disabled={user.death || disabled}
+            size="sm"
+            disabled={(user.death && !keyForLabel2) || disabled}
             variant={
               user === selectedPlayer ? "secondary" : "outline-secondary"
             }
@@ -67,7 +78,7 @@ const PlayersList = (props) => {
               onClickRow(user);
             }}
           >
-            {label}
+            {displayedLabel}
           </Button>
         </div>
       </div>
@@ -82,11 +93,9 @@ const PlayersList = (props) => {
           variant={
             SKIP_ACTION === selectedPlayer ? "secondary" : "outline-secondary"
           }
-          onClick={() => {
-            onClickRow(SKIP_ACTION);
-          }}
+          onClick={handleLastButton}
         >
-          Skip
+          {lastButtonLabel}
         </Button>
       </div>
     </div>
@@ -95,15 +104,4 @@ const PlayersList = (props) => {
   return allPlayersRow;
 };
 
-const mapStateToProps = (state, ownProps) => {
-  let allPlayers = state.firestore.data.werewolfUsers;
-
-  return {
-    allPlayers,
-  };
-};
-
-export default compose(
-  connect(mapStateToProps),
-  firestoreConnect([{ collection: "werewolfUsers" }])
-)(PlayersList);
+export default PlayersList;

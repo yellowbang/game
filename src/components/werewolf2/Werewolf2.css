@@ -1,0 +1,49 @@
+* {
+  box-sizing: border-box;
+}
+
+.mc-view .all-players {
+  flex: 1;
+  overflow: scroll;
+}
+
+.new-game-modal .form-check-input {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.new-game-modal .form-check-label {
+  font-size: 18px;
+  margin-top: 0.1rem;
+  margin-left: 5px;
+  text-transform: capitalize;
+}
+
+.new-game-modal .separator {
+  width: 100%;
+  border-top: 1px solid lightgrey;
+  margin-bottom: 16px;
+}
+
+.mc-view,
+.player-view {
+  height: 100vh;
+}
+
+.player-view .player-row .order-number {
+  min-width: 60px;
+}
+
+.player-view .player-row .name {
+  flex: 1;
+}
+
+.player-view .all-players {
+  flex: 1;
+  overflow: scroll;
+}
+
+.player-row:nth-child(odd) {
+  background: #ebf7ff;
+}
