@@ -5,8 +5,10 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import {
   startGame,
+  setPhase,
   setVote,
   setIsKilled,
+  wolfKill,
 } from "../../store/actions/werewolfActions";
 
 export const WerewolfContext = createContext();
@@ -20,14 +22,24 @@ function WerewolfContextProvider({
   allPlayers,
   gameController,
   startGame,
+  setPhase,
   setVote,
   setIsKilled,
+  wolfKill,
 }) {
   useEffect(() => {
-    console.log("----", allPlayers, gameController);
+    // console.log("----", allPlayers, gameController);
   }, [allPlayers, gameController]);
 
-  const value = { allPlayers, gameController, startGame, setVote, setIsKilled };
+  const value = {
+    allPlayers,
+    gameController,
+    startGame,
+    setPhase,
+    setVote,
+    setIsKilled,
+    wolfKill,
+  };
   return (
     <WerewolfContext.Provider value={value}>
       {children}
@@ -41,7 +53,7 @@ const mapStateToProps = (state, ownProps) => {
     allPlayers[id] = { ...user, id };
   });
 
-  let gameController = state.firestore.data.werewolfGameController?.["1"];
+  let gameController = state.firestore.data.werewolfGameController?.["1"] || {};
   return {
     allPlayers,
     gameController,
@@ -53,6 +65,8 @@ const mapDispatchToProps = (dispatch) => {
     startGame: (user, roles) => dispatch(startGame(user, roles)),
     setVote: (user, vote) => dispatch(setVote(user, vote)),
     setIsKilled: (user) => dispatch(setIsKilled(user)),
+    setPhase: (phase) => dispatch(setPhase(phase)),
+    wolfKill: (user) => dispatch(wolfKill(user)),
   };
 };
 

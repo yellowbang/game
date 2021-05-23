@@ -1,3 +1,6 @@
+import React from "react";
+import PlayersList from "./PlayersList";
+
 export const VILLAGER = "villager";
 export const SEER = "seer";
 export const WITCH = "witch";
@@ -58,6 +61,17 @@ export class Wolf extends Character {
   constructor(role) {
     super(role || WOLF);
     this.isWolf = true;
+  }
+
+  renderPhase(werewolfContext) {
+    return (
+      <PlayersList
+        handleSelect={(user) => {
+          werewolfContext.wolfKill(user);
+        }}
+        label={"Kill"}
+      />
+    );
   }
 }
 

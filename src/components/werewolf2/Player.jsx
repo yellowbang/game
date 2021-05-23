@@ -6,6 +6,7 @@ import Tab from "react-bootstrap/Tab";
 import { getClassFromName } from "./Character";
 import "./Werewolf2.css";
 import PlayersList from "./PlayersList";
+import SelectPhases from "./SelectPhases";
 import { WerewolfContext } from "./WerewolfContextProvider";
 
 const Player = (props) => {
@@ -49,7 +50,19 @@ const Player = (props) => {
         </Button>
       </section>
       <section className="all-players shadow-sm p-3">
-        <PlayersList handleSelect={handleVote} label={"Vote"} />
+        <Tabs defaultActiveKey="home">
+          <Tab eventKey="home" title="Home">
+            home
+            <div className="separator" />
+            <SelectPhases />
+          </Tab>
+          <Tab eventKey="vote" title="Votes">
+            <PlayersList handleSelect={handleVote} label={"Vote"} />
+          </Tab>
+          <Tab eventKey="skill_phase" title="Skill">
+            {playerCharacter.renderPhase?.(werewolfContext)}
+          </Tab>
+        </Tabs>
       </section>
     </div>
   );

@@ -20,7 +20,7 @@
   text-transform: capitalize;
 }
 
-.new-game-modal .separator {
+.separator {
   width: 100%;
   border-top: 1px solid lightgrey;
   margin-bottom: 16px;
@@ -31,19 +31,22 @@
   height: 100vh;
 }
 
-.player-view .player-row .order-number {
+.player-row .order-number {
   min-width: 60px;
 }
 
-.player-view .player-row .name {
+.player-row .name {
   flex: 1;
 }
 
-.player-view .all-players {
+.all-players {
   flex: 1;
   overflow: scroll;
 }
 
 .player-row:nth-child(odd) {
   background: #ebf7ff;
+}
+
+.select-phases {
 }
