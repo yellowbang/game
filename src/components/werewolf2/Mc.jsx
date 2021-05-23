@@ -1,10 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
-import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import "./Werewolf2.css";
@@ -13,7 +7,6 @@ import { WerewolfContext } from "./WerewolfContextProvider";
 import NewGameModal from "./NewGameModal";
 import PlayersList from "./PlayersList";
 import SelectPhases from "./SelectPhases";
-import { VILLAGER, WOLF, allVirtuousGods, allEvilGods } from "./Character";
 
 export default function Mc() {
   const werewolfContext = useContext(WerewolfContext);

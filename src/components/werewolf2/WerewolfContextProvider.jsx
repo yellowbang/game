@@ -5,6 +5,7 @@ import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 import {
   startGame,
+  toggleVotePhase,
   setPhase,
   setVote,
   setIsKilled,
@@ -22,6 +23,7 @@ function WerewolfContextProvider({
   allPlayers,
   gameController,
   startGame,
+  toggleVotePhase,
   setPhase,
   setVote,
   setIsKilled,
@@ -35,6 +37,7 @@ function WerewolfContextProvider({
     allPlayers,
     gameController,
     startGame,
+    toggleVotePhase,
     setPhase,
     setVote,
     setIsKilled,
@@ -63,6 +66,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     startGame: (user, roles) => dispatch(startGame(user, roles)),
+    toggleVotePhase: (isVoting) => dispatch(toggleVotePhase(isVoting)),
     setVote: (user, vote) => dispatch(setVote(user, vote)),
     setIsKilled: (user) => dispatch(setIsKilled(user)),
     setPhase: (phase) => dispatch(setPhase(phase)),

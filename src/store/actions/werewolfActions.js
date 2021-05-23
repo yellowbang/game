@@ -40,6 +40,7 @@ export const startGame = (werewolfUsers, roles) => {
       .filter((wakeUpRole) => {
         return roles.indexOf(wakeUpRole) !== -1;
       })
+      .unshift("wolf")
       .uniq()
       .value();
     gameController.doc(GAME_CONTROLLER).update({ wakeUpRoles });
@@ -73,6 +74,13 @@ export const setVote = (user, vote) => {
 const getGameControllerStore = (getFirestore) => {
   const firestore = getFirestore();
   return firestore.collection("werewolfGameController");
+};
+
+export const toggleVotePhase = (isVoting) => {
+  return (dispatch, getState, { getFirestore }) => {
+    const gameController = getGameControllerStore(getFirestore);
+    gameController.doc(GAME_CONTROLLER).update({ isVoting });
+  };
 };
 
 export const setPhase = (phase) => {

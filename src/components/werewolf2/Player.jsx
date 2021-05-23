@@ -8,6 +8,8 @@ import "./Werewolf2.css";
 import PlayersList from "./PlayersList";
 import SelectPhases from "./SelectPhases";
 import { WerewolfContext } from "./WerewolfContextProvider";
+import NewGameModal from "./NewGameModal";
+import VotePhase from "./VotePhase";
 
 const Player = (props) => {
   const id = window.location.pathname.split("/")[2];
@@ -52,8 +54,13 @@ const Player = (props) => {
       <section className="all-players shadow-sm p-3">
         <Tabs defaultActiveKey="home">
           <Tab eventKey="home" title="Home">
-            home
+            <div className="d-flex flex-column mb-4 align-items-start">
+              home
+              <NewGameModal className="mt-3" />
+              <VotePhase className="mt-3" />
+            </div>
             <div className="separator" />
+            Select Phase
             <SelectPhases />
           </Tab>
           <Tab eventKey="vote" title="Votes">

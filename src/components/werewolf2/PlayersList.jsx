@@ -21,7 +21,7 @@ const PlayersList = (props) => {
     disabled,
     rolesDisplayed,
   } = props;
-  let { allPlayers } = werewolfContext;
+  let { allPlayers, gameController } = werewolfContext;
   const [selectedPlayer, setSelectedPlayer] = useState();
   if (!allPlayers) {
     return <div />;
@@ -60,7 +60,9 @@ const PlayersList = (props) => {
       >
         <div className="order-number">
           {user.number}{" "}
-          {Number.isInteger(user.vote) && user.vote !== INVALID_NUMBER
+          {Number.isInteger(user.vote) &&
+          user.vote !== INVALID_NUMBER &&
+          !gameController.isVoting
             ? ` => ${user.vote}`
             : ""}
         </div>

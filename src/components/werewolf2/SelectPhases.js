@@ -9,7 +9,7 @@ export default function SelectPhases() {
     return (
       <Button
         key={role}
-        className="m-3"
+        className="my-3 mr-3"
         variant="outline-primary"
         onClick={() => {
           werewolfContext.setPhase(role);

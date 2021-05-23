@@ -5,12 +5,8 @@ import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Tabs from "react-bootstrap/Tabs";
-import Tab from "react-bootstrap/Tab";
 
 import { WerewolfContext } from "./WerewolfContextProvider";
-import PlayersList from "./PlayersList";
-import SelectPhases from "./SelectPhases";
 import { VILLAGER, WOLF, allVirtuousGods, allEvilGods } from "./Character";
 
 const renderCheckbox = (character, handleCheck = () => {}) => {
@@ -35,7 +31,7 @@ const renderCheckbox = (character, handleCheck = () => {}) => {
   );
 };
 
-export default function NewGameModal(props) {
+export default function NewGameModal({ className = "" }) {
   const [newGameModalShown, setNewGameModalShown] = useState(false);
   const werewolfContext = useContext(WerewolfContext);
   const { allPlayers } = werewolfContext;
@@ -109,6 +105,7 @@ export default function NewGameModal(props) {
   return (
     <>
       <Button
+        className={className}
         variant="primary"
         onClick={() => {
           setNewGameModalShown(!newGameModalShown);
