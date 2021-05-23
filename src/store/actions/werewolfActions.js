@@ -32,7 +32,12 @@ export const startGame = (werewolfUsers, roles) => {
     _.forEach(werewolfUsers, (user, id) => {
       werewolfUsersStore
         .doc(id)
-        .update({ number: numbers[index], role: roles[index], death: false });
+        .update({
+          number: numbers[index],
+          role: roles[index],
+          death: false,
+          vote: 0,
+        });
       index++;
     });
     const gameController = getGameControllerStore(getFirestore);
@@ -43,7 +48,14 @@ export const startGame = (werewolfUsers, roles) => {
       .unshift("wolf")
       .uniq()
       .value();
-    gameController.doc(GAME_CONTROLLER).update({ wakeUpRoles });
+    gameController.doc(GAME_CONTROLLER).update({
+      wakeUpRoles,
+      isVoting: false,
+      phase: "",
+      seerHasSeen: false,
+      wolfKill: 0,
+      wolfLadySleep: 0,
+    });
   };
 };
 

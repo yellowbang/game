@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import _ from "lodash";
 import Button from "react-bootstrap/Button";
 import Tabs from "react-bootstrap/Tabs";
@@ -15,8 +15,23 @@ import NightPhase from "./NightPhase";
 const Player = (props) => {
   const id = window.location.pathname.split("/")[2];
   const [roleShown, setRoleShown] = useState(false);
+  const [activeTabKey, setActiveTabKey] = useState("home");
   const werewolfContext = useContext(WerewolfContext);
   let { allPlayers } = werewolfContext;
+
+  useEffect(() => {
+    const { role } = playerInfo;
+    const isVoting = werewolfContext.gameController.isVoting;
+    const currentPhase = werewolfContext.gameController.phase;
+    if (isVoting) {
+      setActiveTabKey("vote");
+    } else if (role && currentPhase && role.indexOf(currentPhase) !== -1) {
+      setActiveTabKey("skill");
+    }
+  }, [
+    werewolfContext.gameController.isVoting,
+    werewolfContext.gameController.phase,
+  ]);
 
   if (!allPlayers) {
     return <div />;
@@ -53,7 +68,7 @@ const Player = (props) => {
         </Button>
       </section>
       <section className="all-players shadow-sm p-3">
-        <Tabs defaultActiveKey="home">
+        <Tabs activeKey={activeTabKey} onSelect={(k) => setActiveTabKey(k)}>
           <Tab eventKey="home" title="Home">
             <div className="d-flex flex-column mb-4 align-items-start">
               <NewGameModal className="mt-3" />
@@ -68,7 +83,7 @@ const Player = (props) => {
           <Tab eventKey="vote" title="Votes">
             <PlayersList handleSelect={handleVote} label={"Vote"} />
           </Tab>
-          <Tab eventKey="skill_phase" title="Skill">
+          <Tab eventKey="skill" title="Skill" className="skill-tab">
             {playerCharacter.renderPhase?.(werewolfContext)}
           </Tab>
         </Tabs>

@@ -48,5 +48,6 @@
   background: #ebf7ff;
 }
 
-.select-phases {
+.skill-tab .player-row:nth-child(odd) {
+  background: #d8eedd;
 }

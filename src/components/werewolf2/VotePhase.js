@@ -17,6 +17,7 @@ export default function VotePhase({ className = "" }) {
   } else if (allPlayers) {
     const result = _.chain(allPlayers).countBy("vote").sort().value();
     delete result.undefined;
+    delete result[0];
     if (Object.keys(result).length) {
       description = Object.keys(result).map(
         (num) => `Player ${num} has ${result[num]} votes.`

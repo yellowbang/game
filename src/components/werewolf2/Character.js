@@ -75,11 +75,7 @@ export class Wolf extends Character {
         handleLastButton={(user) => {
           if (gameController.phase === WOLF) {
             werewolfContext.wolfKill(user);
-            const nextRole = getNextPhase(
-              werewolfContext,
-              gameController.phase
-            );
-            if (nextRole) werewolfContext.setPhase(nextRole);
+            setNextPhase(werewolfContext, gameController.phase);
           }
         }}
       />
@@ -111,18 +107,10 @@ export class WolfLady extends Wolf {
         handleLastButton={(user) => {
           if (gameController.phase === WOLF) {
             werewolfContext.wolfKill(user);
-            const nextRole = getNextPhase(
-              werewolfContext,
-              gameController.phase
-            );
-            if (nextRole) werewolfContext.setPhase(nextRole);
+            setNextPhase(werewolfContext, gameController.phase);
           } else if (gameController.phase === WOLF_LADY) {
             werewolfContext.wolfLadySleep(user);
-            const nextRole = getNextPhase(
-              werewolfContext,
-              gameController.phase
-            );
-            if (nextRole) werewolfContext.setPhase(nextRole);
+            setNextPhase(werewolfContext, gameController.phase);
           }
         }}
       />
@@ -136,13 +124,14 @@ export class WolfSnow extends Wolf {
   }
 }
 
-export const getNextPhase = (werewolfContext, currentPhase) => {
+export const setNextPhase = (werewolfContext, currentPhase) => {
   const wakeUpRoles = werewolfContext.gameController?.wakeUpRoles;
   const nextIndex = wakeUpRoles.indexOf(currentPhase) + 1;
   if (wakeUpRoles.length > nextIndex) {
-    return wakeUpRoles[nextIndex];
+    werewolfContext.setPhase(wakeUpRoles[nextIndex]);
+  } else {
+    werewolfContext.setPhase("");
   }
-  return;
 };
 
 export const getClassFromName = (role) => {

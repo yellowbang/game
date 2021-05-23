@@ -20,5 +20,5 @@ export default function SelectPhases() {
     );
   });
 
-  return <div className="select-phases d-flex flex-columns">{phases}</div>;
+  return <div className="d-flex flex-columns">{phases}</div>;
 }
