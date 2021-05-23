@@ -10,6 +10,7 @@ import {
   setVote,
   setIsKilled,
   wolfKill,
+  wolfLadySleep,
 } from "../../store/actions/werewolfActions";
 
 export const WerewolfContext = createContext();
@@ -28,6 +29,7 @@ function WerewolfContextProvider({
   setVote,
   setIsKilled,
   wolfKill,
+  wolfLadySleep,
 }) {
   useEffect(() => {
     // console.log("----", allPlayers, gameController);
@@ -42,6 +44,7 @@ function WerewolfContextProvider({
     setVote,
     setIsKilled,
     wolfKill,
+    wolfLadySleep,
   };
   return (
     <WerewolfContext.Provider value={value}>
@@ -71,6 +74,7 @@ const mapDispatchToProps = (dispatch) => {
     setIsKilled: (user) => dispatch(setIsKilled(user)),
     setPhase: (phase) => dispatch(setPhase(phase)),
     wolfKill: (user) => dispatch(wolfKill(user)),
+    wolfLadySleep: (user) => dispatch(wolfLadySleep(user)),
   };
 };
 

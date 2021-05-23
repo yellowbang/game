@@ -96,3 +96,10 @@ export const wolfKill = (user) => {
     gameController.doc(GAME_CONTROLLER).update({ wolfKill: user.number });
   };
 };
+
+export const wolfLadySleep = (user) => {
+  return (dispatch, getState, { getFirestore }) => {
+    const gameController = getGameControllerStore(getFirestore);
+    gameController.doc(GAME_CONTROLLER).update({ wolfLadySleep: user.number });
+  };
+};

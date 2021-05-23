@@ -18,7 +18,6 @@ export default function VotePhase({ className = "" }) {
     const result = _.chain(allPlayers).countBy("vote").sort().value();
     delete result.undefined;
     if (Object.keys(result).length) {
-      console.log(result);
       description = Object.keys(result).map(
         (num) => `Player ${num} has ${result[num]} votes.`
       );

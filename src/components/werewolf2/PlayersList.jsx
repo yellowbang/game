@@ -29,7 +29,7 @@ const PlayersList = (props) => {
 
   const onClickRow = (player) => {
     setSelectedPlayer(player);
-    handleSelect(player);
+    handleSelect && handleSelect(player);
   };
 
   allPlayers = _.sortBy(allPlayers, [
@@ -95,7 +95,7 @@ const PlayersList = (props) => {
           variant={
             SKIP_ACTION === selectedPlayer ? "secondary" : "outline-secondary"
           }
-          onClick={handleLastButton}
+          onClick={handleLastButton.bind(this, selectedPlayer)}
         >
           {lastButtonLabel}
         </Button>
