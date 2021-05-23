@@ -12,6 +12,7 @@ import {
   setIsKilled,
   wolfKill,
   wolfLadySleep,
+  deleteUser,
 } from "../../store/actions/werewolfActions";
 
 export const WerewolfContext = createContext();
@@ -32,6 +33,7 @@ function WerewolfContextProvider({
   setIsKilled,
   wolfKill,
   wolfLadySleep,
+  deleteUser,
 }) {
   useEffect(() => {
     // console.log("----", allPlayers, gameController);
@@ -48,6 +50,7 @@ function WerewolfContextProvider({
     setIsKilled,
     wolfKill,
     wolfLadySleep,
+    deleteUser,
   };
   return (
     <WerewolfContext.Provider value={value}>
@@ -59,7 +62,9 @@ function WerewolfContextProvider({
 const mapStateToProps = (state, ownProps) => {
   const allPlayers = {};
   _.forEach(state.firestore.data.werewolfUsers, (user, id) => {
-    allPlayers[id] = { ...user, id };
+    if (user && user.username) {
+      allPlayers[id] = { ...user, id };
+    }
   });
 
   let gameController = state.firestore.data.werewolfGameController?.["1"] || {};
@@ -79,6 +84,7 @@ const mapDispatchToProps = (dispatch) => {
     resetNightPhase: (phase) => dispatch(resetNightPhase(phase)),
     wolfKill: (user) => dispatch(wolfKill(user)),
     wolfLadySleep: (user) => dispatch(wolfLadySleep(user)),
+    deleteUser: (user) => dispatch(deleteUser(user)),
   };
 };
 

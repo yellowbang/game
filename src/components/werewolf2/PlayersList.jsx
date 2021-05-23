@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import _ from "lodash";
 import Button from "react-bootstrap/Button";
 import "./Werewolf2.css";
@@ -10,6 +10,7 @@ const SKIP_ACTION = { number: INVALID_NUMBER };
 const PlayersList = (props) => {
   const werewolfContext = useContext(WerewolfContext);
   const {
+    isMc,
     handleSelect,
     label = "Select",
     label2,
@@ -23,6 +24,14 @@ const PlayersList = (props) => {
   } = props;
   let { allPlayers, gameController } = werewolfContext;
   const [selectedPlayer, setSelectedPlayer] = useState();
+
+  const deleteUser = useCallback(
+    (player) => {
+      werewolfContext.deleteUser(player);
+    },
+    [werewolfContext.allPlayers]
+  );
+
   if (!allPlayers) {
     return <div />;
   }
@@ -58,10 +67,19 @@ const PlayersList = (props) => {
         style={userContainer}
         className={itemRowClassName}
       >
+        {isMc && (
+          <div
+            className="delete-user text-danger border border-danger rounded-circle text-center mr-2"
+            onClick={deleteUser.bind(this, user)}
+          >
+            X
+          </div>
+        )}
         <div className="order-number">
           {user.number}{" "}
           {Number.isInteger(user.vote) &&
           user.vote !== INVALID_NUMBER &&
+          user.vote !== 0 &&
           !gameController.isVoting
             ? ` => ${user.vote}`
             : ""}

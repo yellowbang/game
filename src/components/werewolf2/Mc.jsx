@@ -32,6 +32,7 @@ export default function Mc() {
         <Tabs defaultActiveKey="roles">
           <Tab eventKey="roles" title="Roles">
             <PlayersList
+              isMc
               handleSelect={handleKilled}
               label={"Kill"}
               label2={"Killed"}

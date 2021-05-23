@@ -2,6 +2,9 @@
   box-sizing: border-box;
 }
 
+.mc-view .delete-user {
+  width: 24px;
+}
 .mc-view .all-players {
   flex: 1;
   overflow: scroll;
