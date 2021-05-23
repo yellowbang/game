@@ -84,7 +84,7 @@ const Player = (props) => {
             <PlayersList handleSelect={handleVote} label={"Vote"} />
           </Tab>
           <Tab eventKey="skill" title="Skill" className="skill-tab">
-            {playerCharacter.renderPhase?.(werewolfContext)}
+            {playerCharacter.renderPhase?.()}
           </Tab>
         </Tabs>
       </section>

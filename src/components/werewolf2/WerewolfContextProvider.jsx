@@ -1,4 +1,9 @@
-import React, { createContext, useContext, useEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useCallback,
+} from "react";
 import _ from "lodash";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
@@ -39,8 +44,16 @@ function WerewolfContextProvider({
     // console.log("----", allPlayers, gameController);
   }, [allPlayers, gameController]);
 
+  const getRoleByNumber = useCallback(
+    (number) => {
+      return _.find(allPlayers, { number });
+    },
+    [allPlayers]
+  );
+
   const value = {
     allPlayers,
+    getRoleByNumber,
     gameController,
     startGame,
     toggleVotePhase,

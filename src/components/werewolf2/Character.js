@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import _ from "lodash";
 import PlayersList from "./PlayersList";
+import { WerewolfContext } from "./WerewolfContextProvider";
 
 export const VILLAGER = "villager";
 export const SEER = "seer";
@@ -11,13 +12,15 @@ export const WOLF = "wolf";
 export const WOLF_KING = "wolf king";
 export const WOLF_LADY = "wolf lady";
 export const WOLF_SNOW = "wolf snow";
-export const WAKE_UP_ORDER = [WOLF, WOLF_LADY, SEER];
+export const WAKE_UP_ORDER = [WOLF, WOLF_LADY, WITCH, SEER];
 
 export class Character {
   constructor(role) {
+    const werewolfContext = useContext(WerewolfContext);
     this.wakeUpOrder = WAKE_UP_ORDER.findIndex((order) => {
       return order === role;
     });
+    this.werewolfContext = werewolfContext;
     this.characterRole = role;
     this.isWolf = false;
     this.isDefaultCheck = false;
@@ -65,8 +68,8 @@ export class Wolf extends Character {
     this.isWolf = true;
   }
 
-  renderPhase(werewolfContext) {
-    const { gameController } = werewolfContext;
+  renderPhase() {
+    const { gameController, wolfKill } = this.werewolfContext;
     return (
       <PlayersList
         disabled={gameController.phase !== WOLF}
@@ -74,8 +77,8 @@ export class Wolf extends Character {
         lastButtonLabel="Confirm Kill"
         handleLastButton={(user) => {
           if (gameController.phase === WOLF) {
-            werewolfContext.wolfKill(user);
-            setNextPhase(werewolfContext, gameController.phase);
+            wolfKill(user);
+            setNextPhase(this.werewolfContext, gameController.phase);
           }
         }}
       />
@@ -94,8 +97,8 @@ export class WolfLady extends Wolf {
   constructor() {
     super(WOLF_LADY);
   }
-  renderPhase(werewolfContext) {
-    const { gameController } = werewolfContext;
+  renderPhase() {
+    const { gameController, wolfKill, wolfLadySleep } = this.werewolfContext;
     const action = gameController.phase === WOLF_LADY ? "Sleep" : "Kill";
     return (
       <PlayersList
@@ -106,11 +109,11 @@ export class WolfLady extends Wolf {
         lastButtonLabel={`Confirm ${action}`}
         handleLastButton={(user) => {
           if (gameController.phase === WOLF) {
-            werewolfContext.wolfKill(user);
-            setNextPhase(werewolfContext, gameController.phase);
+            wolfKill(user);
+            setNextPhase(this.werewolfContext, gameController.phase);
           } else if (gameController.phase === WOLF_LADY) {
-            werewolfContext.wolfLadySleep(user);
-            setNextPhase(werewolfContext, gameController.phase);
+            wolfLadySleep(user);
+            setNextPhase(this.werewolfContext, gameController.phase);
           }
         }}
       />
