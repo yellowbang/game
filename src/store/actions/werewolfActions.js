@@ -1,7 +1,7 @@
 import { createBrowserHistory } from "history";
 import _ from "lodash";
 
-import { WAKE_UP_ORDER } from "../../components/werewolf2/Character";
+import { WAKE_UP_ORDER, WOLF } from "../../components/werewolf2/Character";
 
 export const history = createBrowserHistory();
 export const GAME_CONTROLLER = "1";
@@ -87,6 +87,13 @@ export const setPhase = (phase) => {
   return (dispatch, getState, { getFirestore }) => {
     const gameController = getGameControllerStore(getFirestore);
     gameController.doc(GAME_CONTROLLER).update({ phase });
+  };
+};
+
+export const resetNightPhase = (phase = WOLF) => {
+  return (dispatch, getState, { getFirestore }) => {
+    const gameController = getGameControllerStore(getFirestore);
+    gameController.doc(GAME_CONTROLLER).update({ phase, seerHasSeen: false });
   };
 };
 

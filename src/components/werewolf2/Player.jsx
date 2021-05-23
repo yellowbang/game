@@ -10,6 +10,7 @@ import SelectPhases from "./SelectPhases";
 import { WerewolfContext } from "./WerewolfContextProvider";
 import NewGameModal from "./NewGameModal";
 import VotePhase from "./VotePhase";
+import NightPhase from "./NightPhase";
 
 const Player = (props) => {
   const id = window.location.pathname.split("/")[2];
@@ -55,12 +56,13 @@ const Player = (props) => {
         <Tabs defaultActiveKey="home">
           <Tab eventKey="home" title="Home">
             <div className="d-flex flex-column mb-4 align-items-start">
-              home
               <NewGameModal className="mt-3" />
-              <VotePhase className="mt-3" />
+              <div className="separator mt-3" />
+              <VotePhase />
+              <NightPhase className="mt-3" />
             </div>
             <div className="separator" />
-            Select Phase
+            Select Phase <br /> (No need to click, just in case of bugs.)
             <SelectPhases />
           </Tab>
           <Tab eventKey="vote" title="Votes">
