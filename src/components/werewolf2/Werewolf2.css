@@ -54,3 +54,7 @@
 .skill-tab .player-row:nth-child(odd) {
   background: #d8eedd;
 }
+
+.witch-action-radio input {
+  margin-right: 5px;
+}

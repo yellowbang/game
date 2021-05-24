@@ -1,5 +1,7 @@
-import React, { useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import _ from "lodash";
+import Button from "react-bootstrap/Button";
+import ToggleButton from "react-bootstrap/ToggleButton";
 import PlayersList from "./PlayersList";
 import { WerewolfContext } from "./WerewolfContextProvider";
 
@@ -16,14 +18,15 @@ export const WAKE_UP_ORDER = [WOLF, WOLF_LADY, WITCH, SEER];
 
 export class Character {
   constructor(role) {
-    const werewolfContext = useContext(WerewolfContext);
     this.wakeUpOrder = WAKE_UP_ORDER.findIndex((order) => {
       return order === role;
     });
-    this.werewolfContext = werewolfContext;
     this.characterRole = role;
     this.isWolf = false;
     this.isDefaultCheck = false;
+  }
+  renderPhase() {
+    return <div />;
   }
 }
 
@@ -44,6 +47,68 @@ export class Witch extends Villager {
   constructor() {
     super(WITCH);
     this.isDefaultCheck = true;
+  }
+
+  renderPhase() {
+    const [radioValue, setRadioValue] = useState("heal");
+    const werewolfContext = useContext(WerewolfContext);
+    const { gameController, witchHeal, witchPoison } = werewolfContext;
+    const poisoned = useRef();
+
+    const radios = [
+      { name: "Heal", value: "heal", variant: "success" },
+      { name: "Poison", value: "poison", variant: "warning" },
+      { name: "Nothing", value: "nothing", variant: "secondary" },
+    ];
+
+    const handleConfirm = () => {
+      if (radioValue === "heal") {
+        witchHeal();
+      } else if (radioValue === "poison") {
+        witchPoison(poisoned.current);
+      }
+      setNextPhase(werewolfContext, gameController.phase);
+    };
+
+    const disabled = gameController.phase !== WITCH;
+
+    return (
+      <div className="p-3">
+        {radios.map((radio, idx) => (
+          <ToggleButton
+            key={idx}
+            className="mr-3 witch-action-radio"
+            type="radio"
+            variant={radio.variant}
+            name="radio"
+            value={radio.value}
+            checked={radioValue === radio.value}
+            onChange={(e) => setRadioValue(e.currentTarget.value)}
+          >
+            {radio.name}
+          </ToggleButton>
+        ))}
+        {radioValue === "heal" && (
+          <div>
+            {gameController.wolfKill} has been killed. Will you save it?
+          </div>
+        )}
+        {radioValue === "poison" && (
+          <PlayersList
+            disabled={disabled}
+            label={"Poison"}
+            handleSelect={(user) => {
+              poisoned.current = user;
+            }}
+            lastButtonLabel=""
+          />
+        )}
+        <div className="separator mt-2" />
+        <Button disabled={disabled} onClick={handleConfirm}>
+          Confirm
+        </Button>
+      </div>
+    );
   }
 }
 
@@ -69,7 +134,8 @@ export class Wolf extends Character {
   }
 
   renderPhase() {
-    const { gameController, wolfKill } = this.werewolfContext;
+    const werewolfContext = useContext(WerewolfContext);
+    const { gameController, wolfKill } = werewolfContext;
     return (
       <PlayersList
         disabled={gameController.phase !== WOLF}
@@ -78,7 +144,7 @@ export class Wolf extends Character {
         handleLastButton={(user) => {
           if (gameController.phase === WOLF) {
             wolfKill(user);
-            setNextPhase(this.werewolfContext, gameController.phase);
+            setNextPhase(werewolfContext, gameController.phase);
           }
         }}
       />
@@ -98,7 +164,8 @@ export class WolfLady extends Wolf {
     super(WOLF_LADY);
   }
   renderPhase() {
-    const { gameController, wolfKill, wolfLadySleep } = this.werewolfContext;
+    const werewolfContext = useContext(WerewolfContext);
+    const { gameController, wolfKill, wolfLadySleep } = werewolfContext;
     const action = gameController.phase === WOLF_LADY ? "Sleep" : "Kill";
     return (
       <PlayersList
@@ -110,10 +177,10 @@ export class WolfLady extends Wolf {
         handleLastButton={(user) => {
           if (gameController.phase === WOLF) {
             wolfKill(user);
-            setNextPhase(this.werewolfContext, gameController.phase);
+            setNextPhase(werewolfContext, gameController.phase);
           } else if (gameController.phase === WOLF_LADY) {
             wolfLadySleep(user);
-            setNextPhase(this.werewolfContext, gameController.phase);
+            setNextPhase(werewolfContext, gameController.phase);
           }
         }}
       />

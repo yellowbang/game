@@ -17,6 +17,8 @@ import {
   setIsKilled,
   wolfKill,
   wolfLadySleep,
+  witchHeal,
+  witchPoison,
   deleteUser,
 } from "../../store/actions/werewolfActions";
 
@@ -38,6 +40,8 @@ function WerewolfContextProvider({
   setIsKilled,
   wolfKill,
   wolfLadySleep,
+  witchHeal,
+  witchPoison,
   deleteUser,
 }) {
   useEffect(() => {
@@ -63,6 +67,8 @@ function WerewolfContextProvider({
     setIsKilled,
     wolfKill,
     wolfLadySleep,
+    witchHeal,
+    witchPoison,
     deleteUser,
   };
   return (
@@ -97,6 +103,8 @@ const mapDispatchToProps = (dispatch) => {
     resetNightPhase: (phase) => dispatch(resetNightPhase(phase)),
     wolfKill: (user) => dispatch(wolfKill(user)),
     wolfLadySleep: (user) => dispatch(wolfLadySleep(user)),
+    witchHeal: () => dispatch(witchHeal()),
+    witchPoison: (user) => dispatch(witchPoison(user)),
     deleteUser: (user) => dispatch(deleteUser(user)),
   };
 };

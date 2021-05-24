@@ -30,14 +30,12 @@ export const startGame = (werewolfUsers, roles) => {
     roles = _.shuffle(roles);
     let index = 0;
     _.forEach(werewolfUsers, (user, id) => {
-      werewolfUsersStore
-        .doc(id)
-        .update({
-          number: numbers[index],
-          role: roles[index],
-          death: false,
-          vote: 0,
-        });
+      werewolfUsersStore.doc(id).update({
+        number: numbers[index],
+        role: roles[index],
+        death: false,
+        vote: 0,
+      });
       index++;
     });
     const gameController = getGameControllerStore(getFirestore);
@@ -120,5 +118,18 @@ export const wolfLadySleep = (user) => {
   return (dispatch, getState, { getFirestore }) => {
     const gameController = getGameControllerStore(getFirestore);
     gameController.doc(GAME_CONTROLLER).update({ wolfLadySleep: user.number });
+  };
+};
+
+export const witchHeal = () => {
+  return (dispatch, getState, { getFirestore }) => {
+    const gameController = getGameControllerStore(getFirestore);
+    gameController.doc(GAME_CONTROLLER).update({ wolfKill: 0 });
+  };
+};
+export const witchPoison = (user) => {
+  return (dispatch, getState, { getFirestore }) => {
+    const gameController = getGameControllerStore(getFirestore);
+    gameController.doc(GAME_CONTROLLER).update({ witchPoison: user.number });
   };
 };

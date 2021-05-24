@@ -105,23 +105,25 @@ const PlayersList = (props) => {
     );
   });
 
-  allPlayersRow.push(
-    <div key="Skip" className={itemRowClassName + " flex-row-reverse"}>
-      <div className="bg-white">
-        <Button
-          disabled={disabled}
-          variant={
-            SKIP_ACTION === selectedPlayer ? "secondary" : "outline-secondary"
-          }
-          onClick={handleLastButton.bind(this, selectedPlayer)}
-        >
-          {lastButtonLabel}
-        </Button>
+  if (lastButtonLabel !== "") {
+    allPlayersRow.push(
+      <div key="Skip" className={itemRowClassName + " flex-row-reverse"}>
+        <div className="bg-white">
+          <Button
+            disabled={disabled}
+            variant={
+              SKIP_ACTION === selectedPlayer ? "secondary" : "outline-secondary"
+            }
+            onClick={handleLastButton.bind(this, selectedPlayer)}
+          >
+            {lastButtonLabel}
+          </Button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 
-  return allPlayersRow;
+  return <div>{allPlayersRow}</div>;
 };
 
 export default PlayersList;
