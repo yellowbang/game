@@ -45,7 +45,7 @@ const Player = (props) => {
       return user.number;
     },
   ]);
-  const { role, username, number } = playerInfo;
+  const { role, username, number, death } = playerInfo;
   const playerCharacter = getClassFromName(role);
 
   const handleVote = (selectedPlayer) => {
@@ -71,7 +71,7 @@ const Player = (props) => {
   }
 
   return (
-    <div className="player-view card my-0 d-flex">
+    <div className={"player-view card my-0 d-flex " + (death ? "bg-dead" : "")}>
       <section className="player-info p-3 shadow-sm d-flex w-100 align-items-center justify-content-between">
         <div />
         <div>

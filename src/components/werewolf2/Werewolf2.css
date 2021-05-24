@@ -2,6 +2,10 @@
   box-sizing: border-box;
 }
 
+.bg-dead {
+  background-color: #f9667433;
+}
+
 .delete-user {
   width: 24px;
 }
@@ -45,6 +49,11 @@
 .all-players {
   flex: 1;
   overflow: scroll;
+}
+
+.player-list-container {
+  background-color: #fff;
+  padding: 5px;
 }
 
 .player-row:nth-child(odd) {

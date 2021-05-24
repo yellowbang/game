@@ -123,7 +123,7 @@ const PlayersList = (props) => {
     );
   }
 
-  return <div>{allPlayersRow}</div>;
+  return <div className='player-list-container'>{allPlayersRow}</div>;
 };
 
 export default PlayersList;
