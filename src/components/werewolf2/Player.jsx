@@ -117,7 +117,7 @@ const Player = (props) => {
               label={"Kill"}
               label2={"Death"}
               keyForLabel2={"death"}
-              lastButtonLabel={"Reveal Roles"}
+              lastButtonLabel={""}
             />
           </Tab>
         </Tabs>
