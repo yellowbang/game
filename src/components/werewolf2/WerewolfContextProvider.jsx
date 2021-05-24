@@ -19,6 +19,7 @@ import {
   wolfLadySleep,
   witchHeal,
   witchPoison,
+  seerSees,
   deleteUser,
 } from "../../store/actions/werewolfActions";
 
@@ -42,6 +43,7 @@ function WerewolfContextProvider({
   wolfLadySleep,
   witchHeal,
   witchPoison,
+  seerSees,
   deleteUser,
 }) {
   useEffect(() => {
@@ -69,6 +71,7 @@ function WerewolfContextProvider({
     wolfLadySleep,
     witchHeal,
     witchPoison,
+    seerSees,
     deleteUser,
   };
   return (
@@ -105,6 +108,7 @@ const mapDispatchToProps = (dispatch) => {
     wolfLadySleep: (user) => dispatch(wolfLadySleep(user)),
     witchHeal: () => dispatch(witchHeal()),
     witchPoison: (user) => dispatch(witchPoison(user)),
+    seerSees: (user) => dispatch(seerSees(user)),
     deleteUser: (user) => dispatch(deleteUser(user)),
   };
 };

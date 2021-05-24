@@ -41,6 +41,44 @@ export class Seer extends Villager {
     super(SEER);
     this.isDefaultCheck = true;
   }
+  renderPhase() {
+    const werewolfContext = useContext(WerewolfContext);
+    const { gameController, seerSees } = werewolfContext;
+    const disabled =
+      gameController.phase !== SEER || gameController.seerHasSeen;
+    const seenPlayer = gameController.seerHasSeen;
+    let result = "";
+    let resultCls = "text-uppercase ";
+    if (seenPlayer) {
+      const role = getClassFromName(seenPlayer.role);
+      if (seenPlayer.role.indexOf("wolf") !== -1 && !role.seerCantSee) {
+        result = WOLF;
+        resultCls += "text-danger";
+      } else {
+        result = VILLAGER;
+        resultCls += "text-success";
+      }
+    }
+
+    return (
+      <div>
+        <PlayersList
+          disabled={disabled}
+          label={"See"}
+          handleSelect={(user) => {
+            seerSees(user);
+          }}
+          lastButtonLabel=""
+        />
+        {seenPlayer && (
+          <h3 className="py-3">
+            Player {seenPlayer.number} is{" "}
+            <span className={resultCls}>{result}</span>{" "}
+          </h3>
+        )}
+      </div>
+    );
+  }
 }
 
 export class Witch extends Villager {
@@ -90,7 +128,7 @@ export class Witch extends Villager {
         ))}
         {radioValue === "heal" && (
           <div>
-            {gameController.wolfKill} has been killed. Will you save it?
+            Player {gameController.wolfKill} has been killed. Will you save it?
           </div>
         )}
         {radioValue === "poison" && (
@@ -191,6 +229,7 @@ export class WolfLady extends Wolf {
 export class WolfSnow extends Wolf {
   constructor() {
     super(WOLF_SNOW);
+    this.seerCantSee = true;
   }
 }
 

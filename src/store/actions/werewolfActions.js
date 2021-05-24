@@ -127,9 +127,17 @@ export const witchHeal = () => {
     gameController.doc(GAME_CONTROLLER).update({ wolfKill: 0 });
   };
 };
+
 export const witchPoison = (user) => {
   return (dispatch, getState, { getFirestore }) => {
     const gameController = getGameControllerStore(getFirestore);
     gameController.doc(GAME_CONTROLLER).update({ witchPoison: user.number });
+  };
+};
+
+export const seerSees = (user) => {
+  return (dispatch, getState, { getFirestore }) => {
+    const gameController = getGameControllerStore(getFirestore);
+    gameController.doc(GAME_CONTROLLER).update({ seerHasSeen: user });
   };
 };
