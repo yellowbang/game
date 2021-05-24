@@ -5,6 +5,7 @@ import ToggleButton from "react-bootstrap/ToggleButton";
 import PlayersList from "./PlayersList";
 import { WerewolfContext } from "./WerewolfContextProvider";
 
+export const DAY_PHASE = "day";
 export const VILLAGER = "villager";
 export const SEER = "seer";
 export const WITCH = "witch";
@@ -67,6 +68,7 @@ export class Seer extends Villager {
           label={"See"}
           handleSelect={(user) => {
             seerSees(user);
+            setNextPhase(werewolfContext, gameController.phase);
           }}
           lastButtonLabel=""
         />
@@ -88,13 +90,18 @@ export class Witch extends Villager {
   }
 
   renderPhase() {
-    const [radioValue, setRadioValue] = useState("heal");
+    const [radioValue, setRadioValue] = useState("nothing");
     const werewolfContext = useContext(WerewolfContext);
     const { gameController, witchHeal, witchPoison } = werewolfContext;
     const poisoned = useRef();
 
     const radios = [
-      { name: "Heal", value: "heal", variant: "success" },
+      {
+        name: "Heal",
+        value: "heal",
+        variant: "success",
+        disabled: gameController.witchHasHeal,
+      },
       { name: "Poison", value: "poison", variant: "warning" },
       { name: "Nothing", value: "nothing", variant: "secondary" },
     ];
@@ -115,6 +122,7 @@ export class Witch extends Villager {
         {radios.map((radio, idx) => (
           <ToggleButton
             key={idx}
+            disabled={radio.disabled}
             className="mr-3 witch-action-radio"
             type="radio"
             variant={radio.variant}
@@ -239,7 +247,7 @@ export const setNextPhase = (werewolfContext, currentPhase) => {
   if (wakeUpRoles.length > nextIndex) {
     werewolfContext.setPhase(wakeUpRoles[nextIndex]);
   } else {
-    werewolfContext.setPhase("");
+    werewolfContext.setPhase(DAY_PHASE);
   }
 };
 

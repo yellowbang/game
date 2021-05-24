@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-.mc-view .delete-user {
+.delete-user {
   width: 24px;
 }
 .mc-view .all-players {
@@ -53,6 +53,10 @@
 
 .skill-tab .player-row:nth-child(odd) {
   background: #d8eedd;
+}
+
+.skill-tab .player-row:nth-child(odd) {
+  background: #dadada;
 }
 
 .witch-action-radio input {

@@ -35,7 +35,7 @@ export default function Mc() {
               isMc
               handleSelect={handleKilled}
               label={"Kill"}
-              label2={"Killed"}
+              label2={"Death"}
               keyForLabel2={"death"}
               lastButtonLabel={"Reveal Roles"}
               rolesDisplayed={rolesDisplayed}

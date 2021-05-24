@@ -51,6 +51,8 @@ export const startGame = (werewolfUsers, roles) => {
       isVoting: false,
       phase: "",
       seerHasSeen: false,
+      witchHasHeal: false,
+      witchPoison: 0,
       wolfKill: 0,
       wolfLadySleep: 0,
     });
@@ -61,7 +63,9 @@ export const setIsKilled = (killedUser) => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
     let werewolfUsersStore = firestore.collection("werewolfUsers");
-    werewolfUsersStore.doc(killedUser.id).update({ death: !killedUser.death });
+    werewolfUsersStore
+      .doc(killedUser.id)
+      .update({ death: !killedUser.death, vote: 0 });
   };
 };
 
@@ -124,7 +128,9 @@ export const wolfLadySleep = (user) => {
 export const witchHeal = () => {
   return (dispatch, getState, { getFirestore }) => {
     const gameController = getGameControllerStore(getFirestore);
-    gameController.doc(GAME_CONTROLLER).update({ wolfKill: 0 });
+    gameController
+      .doc(GAME_CONTROLLER)
+      .update({ wolfKill: 0, witchHasHeal: true });
   };
 };
 

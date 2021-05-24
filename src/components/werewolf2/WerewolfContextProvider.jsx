@@ -50,16 +50,16 @@ function WerewolfContextProvider({
     // console.log("----", allPlayers, gameController);
   }, [allPlayers, gameController]);
 
-  const getRoleByNumber = useCallback(
+  const getPlayerByNumber = useCallback(
     (number) => {
-      return _.find(allPlayers, { number });
+      return _.find(allPlayers, { number: parseInt(number, 10) });
     },
     [allPlayers]
   );
 
   const value = {
     allPlayers,
-    getRoleByNumber,
+    getPlayerByNumber,
     gameController,
     startGame,
     toggleVotePhase,
