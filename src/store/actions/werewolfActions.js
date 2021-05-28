@@ -1,6 +1,7 @@
 import { createBrowserHistory } from "history";
 import _ from "lodash";
 
+import { DAY_PHASE } from "../../components/werewolf2/Character";
 import { WAKE_UP_ORDER, WOLF } from "../../components/werewolf2/Character";
 
 export const history = createBrowserHistory();
@@ -49,6 +50,7 @@ export const startGame = (werewolfUsers, roles) => {
     gameController.doc(GAME_CONTROLLER).update({
       wakeUpRoles,
       isVoting: false,
+      previousPhase: "",
       phase: "",
       seerHasSeen: false,
       witchHasHeal: false,
@@ -100,14 +102,18 @@ export const toggleVotePhase = (isVoting) => {
 export const setPhase = (phase) => {
   return (dispatch, getState, { getFirestore }) => {
     const gameController = getGameControllerStore(getFirestore);
-    gameController.doc(GAME_CONTROLLER).update({ phase });
+    const previousPhase =
+      getState().firestore.data.werewolfGameController[GAME_CONTROLLER].phase;
+    gameController.doc(GAME_CONTROLLER).update({ phase, previousPhase });
   };
 };
 
 export const resetNightPhase = (phase = WOLF) => {
   return (dispatch, getState, { getFirestore }) => {
     const gameController = getGameControllerStore(getFirestore);
-    gameController.doc(GAME_CONTROLLER).update({ phase, seerHasSeen: false });
+    gameController
+      .doc(GAME_CONTROLLER)
+      .update({ phase, seerHasSeen: false, previousPhase: DAY_PHASE });
   };
 };
 

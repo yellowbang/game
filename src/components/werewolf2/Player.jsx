@@ -12,28 +12,29 @@ import NewGameModal from "./NewGameModal";
 import VotePhase from "./VotePhase";
 import NightPhase from "./NightPhase";
 import { DAY_PHASE } from "./Character";
+import Sound from "./Sound";
 
 const Player = (props) => {
   const id = window.location.pathname.split("/")[2];
   const [roleShown, setRoleShown] = useState(false);
   const [activeTabKey, setActiveTabKey] = useState("home");
   const werewolfContext = useContext(WerewolfContext);
-  const { wolfKill, witchPoison } = werewolfContext.gameController;
+  const { wolfKill, witchPoison, isVoting, phase } =
+    werewolfContext.gameController;
   let { allPlayers } = werewolfContext;
 
   useEffect(() => {
-    const { role } = playerInfo;
-    const isVoting = werewolfContext.gameController.isVoting;
-    const currentPhase = werewolfContext.gameController.phase;
     if (isVoting) {
       setActiveTabKey("vote");
-    } else if (role && currentPhase && role.indexOf(currentPhase) !== -1) {
+    }
+  }, [isVoting]);
+
+  useEffect(() => {
+    const { role } = playerInfo;
+    if (role && phase && role.indexOf(phase) !== -1) {
       setActiveTabKey("skill");
     }
-  }, [
-    werewolfContext.gameController.isVoting,
-    werewolfContext.gameController.phase,
-  ]);
+  }, [phase]);
 
   if (!allPlayers) {
     return <div />;
@@ -53,7 +54,7 @@ const Player = (props) => {
   };
 
   let resultOnNextDay = "";
-  if (werewolfContext.gameController.phase === DAY_PHASE) {
+  if (phase === DAY_PHASE) {
     if (wolfKill === 0 && witchPoison === 0) {
       resultOnNextDay = "It was a peaceful night.";
     } else {
@@ -105,7 +106,7 @@ const Player = (props) => {
             <PlayersList
               handleSelect={handleVote}
               label={"Vote"}
-              disabled={playerInfo.death}
+              disabled={playerInfo.death || !isVoting}
             />
           </Tab>
           <Tab eventKey="skill" title="Skill" className="skill-tab">
@@ -122,6 +123,7 @@ const Player = (props) => {
           </Tab>
         </Tabs>
       </section>
+      <Sound />
     </div>
   );
 };

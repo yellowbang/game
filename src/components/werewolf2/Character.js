@@ -5,6 +5,15 @@ import ToggleButton from "react-bootstrap/ToggleButton";
 import PlayersList from "./PlayersList";
 import { WerewolfContext } from "./WerewolfContextProvider";
 
+import DayStart from "../../assets/audio/DayStart.mp3";
+import DayEnd from "../../assets/audio/DayEnd.mp3";
+import WolfStart from "../../assets/audio/WolfStart.mp3";
+import WolfEnd from "../../assets/audio/WolfEnd.mp3";
+import SeerStart from "../../assets/audio/SeerStart.mp3";
+import SeerEnd from "../../assets/audio/SeerEnd.mp3";
+import WitchStart from "../../assets/audio/WitchStart.mp3";
+import WitchEnd from "../../assets/audio/WitchEnd.mp3";
+
 export const DAY_PHASE = "day";
 export const VILLAGER = "villager";
 export const SEER = "seer";
@@ -17,6 +26,12 @@ export const WOLF_LADY = "wolf lady";
 export const WOLF_SNOW = "wolf snow";
 export const WAKE_UP_ORDER = [WOLF, WOLF_LADY, WITCH, SEER];
 
+export class Day {
+  constructor() {
+    this.startSound = DayStart;
+    this.endSound = DayEnd;
+  }
+}
 export class Character {
   constructor(role) {
     this.wakeUpOrder = WAKE_UP_ORDER.findIndex((order) => {
@@ -41,6 +56,8 @@ export class Seer extends Villager {
   constructor() {
     super(SEER);
     this.isDefaultCheck = true;
+    this.startSound = SeerStart;
+    this.endSound = SeerEnd;
   }
   renderPhase() {
     const werewolfContext = useContext(WerewolfContext);
@@ -87,6 +104,8 @@ export class Witch extends Villager {
   constructor() {
     super(WITCH);
     this.isDefaultCheck = true;
+    this.startSound = WitchStart;
+    this.endSound = WitchEnd;
   }
 
   renderPhase() {
@@ -177,6 +196,8 @@ export class Wolf extends Character {
     super(role);
     this.role = role;
     this.isWolf = true;
+    this.startSound = WolfStart;
+    this.endSound = WolfEnd;
   }
 
   renderPhase() {
@@ -256,6 +277,10 @@ export const getClassFromName = (role) => {
     return new Character();
   } else {
     switch (role.toLowerCase()) {
+      case DAY_PHASE:
+        return new Day();
+      case VILLAGER:
+        return new Villager();
       case SEER:
         return new Seer();
       case WITCH:
