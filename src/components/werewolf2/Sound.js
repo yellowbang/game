@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useRef } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import moment from "moment";
 import useSound from "use-sound";
 import { WerewolfContext } from "./WerewolfContextProvider";

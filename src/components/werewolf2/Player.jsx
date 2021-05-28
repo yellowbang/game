@@ -9,9 +9,9 @@ import PlayersList from "./PlayersList";
 import SelectPhases from "./SelectPhases";
 import { WerewolfContext } from "./WerewolfContextProvider";
 import NewGameModal from "./NewGameModal";
+import News from "./News";
 import VotePhase from "./VotePhase";
 import NightPhase from "./NightPhase";
-import { DAY_PHASE } from "./Character";
 import Sound from "./Sound";
 
 const Player = (props) => {
@@ -19,8 +19,7 @@ const Player = (props) => {
   const [roleShown, setRoleShown] = useState(false);
   const [activeTabKey, setActiveTabKey] = useState("home");
   const werewolfContext = useContext(WerewolfContext);
-  const { wolfKill, witchPoison, isVoting, phase } =
-    werewolfContext.gameController;
+  const { isVoting, phase } = werewolfContext.gameController;
   let { allPlayers } = werewolfContext;
 
   useEffect(() => {
@@ -53,24 +52,6 @@ const Player = (props) => {
     werewolfContext.setVote(playerInfo, selectedPlayer.number);
   };
 
-  let resultOnNextDay = "";
-  if (phase === DAY_PHASE) {
-    if (wolfKill === 0 && witchPoison === 0) {
-      resultOnNextDay = "It was a peaceful night.";
-    } else {
-      let dead = [wolfKill, witchPoison];
-      dead = _.chain(dead)
-        .filter((number) => {
-          return number > 0;
-        })
-        .sort()
-        .value();
-      resultOnNextDay = `Player ${dead.join(
-        " and player "
-      )} got killed last night`;
-    }
-  }
-
   return (
     <div className={"player-view card my-0 d-flex " + (death ? "bg-dead" : "")}>
       <section className="player-info p-3 shadow-sm d-flex w-100 align-items-center justify-content-between">
@@ -94,12 +75,11 @@ const Player = (props) => {
             <div className="d-flex flex-column mb-4 align-items-start">
               <NewGameModal className="mt-3" />
               <div className="separator mt-3" />
-              <h5>{resultOnNextDay}</h5>
+              <News />
               <VotePhase />
               <NightPhase className="mt-3" />
             </div>
             <div className="separator" />
-            Select Phase <br /> (No need to click, just in case of bugs.)
             <SelectPhases />
           </Tab>
           <Tab eventKey="vote" title="Votes">

@@ -20,5 +20,12 @@ export default function SelectPhases() {
     );
   });
 
-  return <div className="d-flex flex-columns">{phases}</div>;
+  return (
+    <div className="">
+      <div>
+        Select Phase <br /> (No need to click, just in case of bugs.)
+      </div>
+      {phases}
+    </div>
+  );
 }

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import "./Werewolf2.css";
@@ -7,6 +7,9 @@ import { WerewolfContext } from "./WerewolfContextProvider";
 import NewGameModal from "./NewGameModal";
 import PlayersList from "./PlayersList";
 import SelectPhases from "./SelectPhases";
+import News from "./News";
+import VotePhase from "./VotePhase";
+import NightPhase from "./NightPhase";
 
 export default function Mc() {
   const werewolfContext = useContext(WerewolfContext);
@@ -43,6 +46,11 @@ export default function Mc() {
             />
           </Tab>
           <Tab eventKey="select_phases" title="Select Phases">
+            <div className="w-100 mb-3" />
+            <News />
+            <VotePhase />
+            <NightPhase className="my-3" />
+            <div className="separator" />
             <SelectPhases />
           </Tab>
         </Tabs>
