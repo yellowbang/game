@@ -41,8 +41,24 @@ export class Character {
     this.isWolf = false;
     this.isDefaultCheck = false;
   }
+
+  onDead() {}
+
   renderPhase() {
     return <div />;
+  }
+
+  getContext() {
+    return useContext(WerewolfContext);
+  }
+
+  getGameController() {
+    return this.getContext().gameController;
+  }
+
+  getCurrentPlayerInfo() {
+    const id = window.location.pathname.split("/")[2];
+    return this.getContext().allPlayers[id];
   }
 }
 
@@ -230,8 +246,9 @@ export class WolfLady extends Wolf {
   constructor() {
     super(WOLF_LADY);
   }
+
   renderPhase() {
-    const werewolfContext = useContext(WerewolfContext);
+    const werewolfContext = this.getContext();
     const { gameController, wolfKill, wolfLadySleep } = werewolfContext;
     const action = gameController.phase === WOLF_LADY ? "Sleep" : "Kill";
     return (

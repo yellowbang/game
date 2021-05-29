@@ -16,7 +16,7 @@ export default function Mc() {
   const [rolesDisplayed, setRolesDisplayed] = useState(false);
 
   const handleKilled = (user) => {
-    werewolfContext.setIsKilled(user);
+    werewolfContext.toggleIsKilled(user);
   };
 
   const toggleRolesDisplayed = () => {

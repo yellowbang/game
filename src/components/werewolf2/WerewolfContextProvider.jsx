@@ -14,7 +14,7 @@ import {
   setPhase,
   resetNightPhase,
   setVote,
-  setIsKilled,
+  toggleIsKilled,
   wolfKill,
   wolfLadySleep,
   witchHeal,
@@ -22,6 +22,7 @@ import {
   seerSees,
   deleteUser,
 } from "../../store/actions/werewolfActions";
+import { getClassFromName } from "./Character";
 
 export const WerewolfContext = createContext();
 
@@ -38,7 +39,7 @@ function WerewolfContextProvider({
   setPhase,
   resetNightPhase,
   setVote,
-  setIsKilled,
+  toggleIsKilled,
   wolfKill,
   wolfLadySleep,
   witchHeal,
@@ -49,6 +50,16 @@ function WerewolfContextProvider({
   useEffect(() => {
     // console.log("----", allPlayers, gameController);
   }, [allPlayers, gameController]);
+
+  const id = window.location.pathname.split("/")[2];
+  const playerInfo = { ...allPlayers[id], id };
+  useEffect(() => {
+    if (playerInfo.death) {
+      const { role } = playerInfo;
+      const playerCharacter = getClassFromName(role);
+      playerCharacter.onDead();
+    }
+  }, [playerInfo.death]);
 
   const getPlayerByNumber = useCallback(
     (number) => {
@@ -66,7 +77,7 @@ function WerewolfContextProvider({
     setPhase,
     resetNightPhase,
     setVote,
-    setIsKilled,
+    toggleIsKilled,
     wolfKill,
     wolfLadySleep,
     witchHeal,
@@ -101,7 +112,7 @@ const mapDispatchToProps = (dispatch) => {
     startGame: (user, roles) => dispatch(startGame(user, roles)),
     toggleVotePhase: (isVoting) => dispatch(toggleVotePhase(isVoting)),
     setVote: (user, vote) => dispatch(setVote(user, vote)),
-    setIsKilled: (user) => dispatch(setIsKilled(user)),
+    toggleIsKilled: (user) => dispatch(toggleIsKilled(user)),
     setPhase: (phase) => dispatch(setPhase(phase)),
     resetNightPhase: (phase) => dispatch(resetNightPhase(phase)),
     wolfKill: (user) => dispatch(wolfKill(user)),

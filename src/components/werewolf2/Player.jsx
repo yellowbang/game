@@ -94,7 +94,7 @@ const Player = (props) => {
           </Tab>
           <Tab eventKey="all" title="All Players" className="all-tab">
             <PlayersList
-              handleSelect={werewolfContext.setIsKilled}
+              handleSelect={werewolfContext.toggleIsKilled}
               label={"Kill"}
               label2={"Death"}
               keyForLabel2={"death"}

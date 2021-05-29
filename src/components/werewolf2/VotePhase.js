@@ -6,7 +6,7 @@ import { WerewolfContext } from "./WerewolfContextProvider";
 
 export default function VotePhase({ className = "" }) {
   const werewolfContext = useContext(WerewolfContext);
-  const { allPlayers, gameController, setIsKilled, getPlayerByNumber } =
+  const { allPlayers, gameController, toggleIsKilled, getPlayerByNumber } =
     werewolfContext;
   const isVoting = gameController.isVoting;
   const handleClick = () => {
@@ -64,7 +64,7 @@ export default function VotePhase({ className = "" }) {
             className={className + " mt-3"}
             variant={"danger"}
             onClick={() => {
-              setIsKilled(maxPlayer);
+              toggleIsKilled(maxPlayer);
             }}
           >
             Vote out player {maxPlayerNumbers[0]}

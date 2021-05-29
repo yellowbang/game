@@ -61,6 +61,26 @@ export const startGame = (werewolfUsers, roles) => {
   };
 };
 
+export const toggleIsKilled = (killedUser) => {
+  return (dispatch, getState, { getFirestore }) => {
+    const firestore = getFirestore();
+    let werewolfUsersStore = firestore.collection("werewolfUsers");
+    werewolfUsersStore
+      .doc(killedUser.id)
+      .update({ death: !killedUser.death, vote: 0 });
+  };
+};
+
+export const setKills = (killedUserIds) => {
+  return (dispatch, getState, { getFirestore }) => {
+    const firestore = getFirestore();
+    let werewolfUsersStore = firestore.collection("werewolfUsers");
+    killedUserIds.forEach((id) => {
+      werewolfUsersStore.doc(id).update({ death: true, vote: 0 });
+    });
+  };
+};
+
 export const setIsKilled = (killedUser) => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
