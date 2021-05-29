@@ -23,7 +23,7 @@ export default function SelectPhases() {
   return (
     <div className="">
       <div>
-        Select Phase <br /> (No need to click, just in case of bugs.)
+        Set Phase <br /> (Force to jump to the phase)
       </div>
       {phases}
     </div>

@@ -80,7 +80,6 @@ const Player = (props) => {
               <NightPhase className="mt-3" />
             </div>
             <div className="separator" />
-            <SelectPhases />
           </Tab>
           <Tab eventKey="vote" title="Votes">
             <PlayersList
@@ -89,10 +88,16 @@ const Player = (props) => {
               disabled={playerInfo.death || !isVoting}
             />
           </Tab>
-          <Tab eventKey="skill" title="Skill" className="skill-tab">
+          <Tab eventKey="skill" title="Skill">
             <playerCharacter.renderPhase />
           </Tab>
-          <Tab eventKey="all" title="All Players" className="all-tab">
+          <Tab eventKey="hack" title="Hack">
+            <h5 className="mt-3">
+              You can modify the game here if something goes wrong
+            </h5>
+            <div className="separator" />
+            <SelectPhases />
+            <div className="separator" />
             <PlayersList
               handleSelect={werewolfContext.toggleIsKilled}
               label={"Kill"}

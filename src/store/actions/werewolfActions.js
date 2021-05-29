@@ -71,12 +71,12 @@ export const toggleIsKilled = (killedUser) => {
   };
 };
 
-export const setKills = (killedUserIds) => {
+export const setKills = (users = []) => {
   return (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
     let werewolfUsersStore = firestore.collection("werewolfUsers");
-    killedUserIds.forEach((id) => {
-      werewolfUsersStore.doc(id).update({ death: true, vote: 0 });
+    users.forEach((user) => {
+      werewolfUsersStore.doc(user.id).update({ death: true, vote: 0 });
     });
   };
 };
