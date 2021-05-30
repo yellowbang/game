@@ -101,7 +101,6 @@ export class Seer extends Villager {
           label={"See"}
           handleSelect={(user) => {
             seerSees(user);
-            setNextPhase(werewolfContext, gameController.phase);
           }}
           lastButtonLabel=""
         />
@@ -111,6 +110,14 @@ export class Seer extends Villager {
             <span className={resultCls}>{result}</span>{" "}
           </h3>
         )}
+        <Button
+          className={"float-right"}
+          onClick={() => {
+            setNextPhase(werewolfContext, gameController.phase);
+          }}
+        >
+          End
+        </Button>
       </div>
     );
   }

@@ -64,8 +64,12 @@
   background: #d8eedd;
 }
 
-.skill-tab .player-row:nth-child(odd) {
+.vote-tab .player-row:nth-child(odd) {
   background: #dadada;
+}
+
+.player-row.selected-player {
+  background-color: aquamarine !important;
 }
 
 .witch-action-radio input {

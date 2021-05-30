@@ -65,7 +65,9 @@ const PlayersList = (props) => {
         id={user.id}
         key={user.username}
         style={userContainer}
-        className={itemRowClassName}
+        className={
+          itemRowClassName + (user === selectedPlayer ? " selected-player" : "")
+        }
       >
         {isMc && (
           <div
@@ -123,7 +125,7 @@ const PlayersList = (props) => {
     );
   }
 
-  return <div className='player-list-container'>{allPlayersRow}</div>;
+  return <div className="player-list-container">{allPlayersRow}</div>;
 };
 
 export default PlayersList;

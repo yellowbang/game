@@ -71,7 +71,7 @@ const Player = (props) => {
       </section>
       <section className="all-players shadow-sm p-3">
         <Tabs activeKey={activeTabKey} onSelect={(k) => setActiveTabKey(k)}>
-          <Tab eventKey="home" title="Home">
+          <Tab eventKey="game" title="Game">
             <div className="d-flex flex-column mb-4 align-items-start">
               <NewGameModal className="mt-3" />
               <div className="separator mt-3" />
@@ -81,14 +81,14 @@ const Player = (props) => {
             </div>
             <div className="separator" />
           </Tab>
-          <Tab eventKey="vote" title="Votes">
+          <Tab eventKey="vote" title="Votes" className="vote-tab">
             <PlayersList
               handleSelect={handleVote}
               label={"Vote"}
               disabled={playerInfo.death || !isVoting}
             />
           </Tab>
-          <Tab eventKey="skill" title="Skill">
+          <Tab eventKey="skill" title="Skill" className="skill-tab">
             <playerCharacter.renderPhase />
           </Tab>
           <Tab eventKey="hack" title="Hack">

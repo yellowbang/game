@@ -45,13 +45,20 @@ export default function Mc() {
               handleLastButton={toggleRolesDisplayed}
             />
           </Tab>
-          <Tab eventKey="select_phases" title="Select Phases">
+          <Tab eventKey="game" title="Game">
             <div className="w-100 mb-3" />
-            <News />
+            <News isMc />
             <VotePhase />
             <NightPhase className="my-3" />
             <div className="separator" />
+          </Tab>
+          <Tab eventKey="hack" title="Hack">
+            <h5 className="mt-3">
+              You can modify the game here if something goes wrong
+            </h5>
+            <div className="separator" />
             <SelectPhases />
+            <div className="separator" />
           </Tab>
         </Tabs>
       </section>

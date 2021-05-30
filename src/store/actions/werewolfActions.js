@@ -133,7 +133,12 @@ export const resetNightPhase = (phase = WOLF) => {
     const gameController = getGameControllerStore(getFirestore);
     gameController
       .doc(GAME_CONTROLLER)
-      .update({ phase, seerHasSeen: false, previousPhase: DAY_PHASE });
+      .update({
+        phase,
+        previousPhase: DAY_PHASE,
+        seerHasSeen: false,
+        witchPoison: 0,
+      });
   };
 };
 
